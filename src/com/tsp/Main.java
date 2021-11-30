@@ -1,8 +1,11 @@
 package com.tsp;
 
-import static com.tsp.TSPAlgorithms.naiveAlgorithm;
+import static com.tsp.algorithms.AlgorithmsHelper.totalDistance;
+
+import com.tsp.algorithms.TSPAlgorithms;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 public class Main {
 
@@ -11,29 +14,65 @@ public class Main {
    private static final String VERBOSE_FLAG = "-v";
    private static Kattio io;
 
-   public static void main(String[] args) {
-      //      Random rand = new Random();
-      //
-      //      for (int i = 0; i < 100; i++) {
-      //         System.out.println(rand.nextInt(100) + " " + rand.nextInt(100));
-      //      }
-
+   public static void main(String[] args) throws Exception {
       initLoggingVerbosity(args);
-
       ArrayList<City> cities = getCitiesFromSystemIn();
 
-      long startTime = System.nanoTime();
-            ArrayList<City> tourOrder = naiveAlgorithm(cities);
-//      ArrayList<City> tourOrder = greedyAlgorithm(cities);
-      long duration = (System.nanoTime() - startTime);
-
       if (IS_VERBOSE) {
-         System.out.println(duration + " ns");
+         benchmark(cities);
+      } else {
+         ArrayList<City> tourOrder = TSPAlgorithms.twoOpt(cities);
+         tourOrder.forEach(city -> System.out.println(city.getId()));
       }
 
-      tourOrder.forEach(city -> System.out.println(city.getId()));
-
       io.close();
+   }
+
+   private static void benchmark(ArrayList<City> cities) throws Exception {
+      System.out.println("Benchmarking algorithms with tour size: " + cities.size());
+
+      System.out.println("\n---~ Naive ~---");
+      if (cities.size() > 10) {
+         System.out.println("Size too large for naive...");
+      } else {
+         testSingleAlgorithm(() -> TSPAlgorithms.naive(cities));
+      }
+
+      System.out.println("\n---~ Branch And Bound ~---");
+      testSingleAlgorithm(() -> TSPAlgorithms.branchAndBound(cities));
+
+      System.out.println("\n---~ Greedy ~---");
+      testSingleAlgorithm(() -> TSPAlgorithms.greedy(cities));
+
+      System.out.println("\n---~ Two Opt ~---");
+      testSingleAlgorithm(() -> TSPAlgorithms.twoOpt(cities));
+   }
+
+   private static void testSingleAlgorithm(Callable<ArrayList<City>> func) throws Exception {
+      int numIterations = 5;
+      int bestDistance = Integer.MAX_VALUE;
+      double time = 0;
+
+      for (int i = 0; i < numIterations; i++) {
+         long startTime = System.nanoTime();
+         ArrayList<City> tourOrder = func.call();
+         long duration = (System.nanoTime() - startTime);
+
+         double seconds = (double) duration / 1000000000;
+         time += seconds;
+
+         int distance = totalDistance(tourOrder);
+         if (distance < bestDistance) {
+            bestDistance = distance;
+         }
+
+         System.out.println(i + 1 + ") Duration: " + seconds + " s. Distance: " + distance);
+      }
+
+      System.out.println("--");
+      System.out.println("Best distance " + bestDistance);
+      System.out.println("Average execution time: " + time / numIterations);
+      System.out.println("--");
    }
 
    private static void initLoggingVerbosity(String[] args) {
