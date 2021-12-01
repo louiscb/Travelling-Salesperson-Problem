@@ -23,7 +23,8 @@ public class City {
       Coordinate b = nextCity.getCoordinate();
 
       // Calculate hypotenuse / euclidean distance
-      double sqrt = Math.sqrt((b.getY() - a.getY()) * (b.getY() - a.getY()) + (b.getX() - a.getX()) * (b.getX() - a.getX()));
+      double sqrt = Math.sqrt((b.getY() - a.getY()) * (b.getY() - a.getY())
+              + (b.getX() - a.getX()) * (b.getX() - a.getX()));
       return (int) Math.rint(sqrt);
    }
 }

@@ -38,18 +38,20 @@ public class Main {
          testSingleAlgorithm(() -> TSPAlgorithms.naive(cities));
       }
 
-      System.out.println("\n---~ Branch And Bound ~---");
-      testSingleAlgorithm(() -> TSPAlgorithms.branchAndBound(cities));
-
-      System.out.println("\n---~ Greedy ~---");
-      testSingleAlgorithm(() -> TSPAlgorithms.greedy(cities));
-
       System.out.println("\n---~ Two Opt ~---");
       testSingleAlgorithm(() -> TSPAlgorithms.twoOpt(cities));
+
+
+    //  System.out.println("\n---~ Branch And Bound ~---");
+      //testSingleAlgorithm(() -> TSPAlgorithms.branchAndBound(cities));
+
+      //System.out.println("\n---~ Greedy ~---");
+      //testSingleAlgorithm(() -> TSPAlgorithms.greedy(cities));
+
    }
 
    private static void testSingleAlgorithm(Callable<ArrayList<City>> func) throws Exception {
-      int numIterations = 5;
+      int numIterations = 50;
       int bestDistance = Integer.MAX_VALUE;
       double time = 0;
 

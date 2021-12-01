@@ -18,8 +18,9 @@ public class BranchAndBound implements TSPAlgorithm {
 
    private int[][] createDistanceMatrix(ArrayList<City> cities) {
       int[][] matrix = new int[cities.size()][cities.size()];
+
       for (int i = 0; i < cities.size(); i++) {
-         for (int j = 0; j < cities.size(); j++) {
+         for (int j = i; j < cities.size(); j++) {
             int distance;
             if (i == j) {
                distance = 0;
@@ -28,6 +29,7 @@ public class BranchAndBound implements TSPAlgorithm {
             }
 
             matrix[i][j] = distance;
+            matrix[j][i] = distance;
          }
       }
 
