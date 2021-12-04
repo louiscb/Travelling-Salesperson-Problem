@@ -9,6 +9,8 @@ out/
 *.lo
 *.o
 *.obj
+*.out
+*.out*
 
 # CMake
 cmake-build-*/
