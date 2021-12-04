@@ -1,4 +1,4 @@
-package com.tsp;
+package com.tsp.domain;
 
 public class City {
 

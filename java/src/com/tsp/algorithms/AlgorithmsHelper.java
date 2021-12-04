@@ -1,6 +1,6 @@
 package com.tsp.algorithms;
 
-import com.tsp.City;
+import com.tsp.domain.City;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ public class AlgorithmsHelper {
       return totalDistance + cities.get(cities.size() - 1).distanceTo(cities.get(0));
    }
 
-   private int[][] createDistanceMatrix(ArrayList<City> cities) {
+   public static int[][] createDistanceMatrix(ArrayList<City> cities) {
       int[][] matrix = new int[cities.size()][cities.size()];
 
       for (int i = 0; i < cities.size(); i++) {
@@ -35,14 +35,18 @@ public class AlgorithmsHelper {
       return matrix;
    }
 
-   private void printMatrix(ArrayList<City> cities) {
-      int[][] distanceMatrix = createDistanceMatrix(cities);
-
-      for (int i = 0; i < cities.size(); i++) {
-         for (int j = 0; j < cities.size(); j++) {
+   public static void printMatrix(int[][] distanceMatrix, int n) {
+      for (int i = 0; i < n; i++) {
+         for (int j = 0; j < n; j++) {
             System.out.print(distanceMatrix[i][j] + " ");
          }
          System.out.println("");
       }
+   }
+
+   public static void printCities(ArrayList<City> cities) {
+      System.out.println("---");
+      cities.forEach(city -> System.out.print(city.getId()+ ", "));
+      System.out.println("---");
    }
 }

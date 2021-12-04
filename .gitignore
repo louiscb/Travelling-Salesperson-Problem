@@ -3,3 +3,14 @@ out/
 *.iml
 *.class
 .DS_Store
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# CMake
+cmake-build-*/
+CMakeLists*
+main.out.dSYM

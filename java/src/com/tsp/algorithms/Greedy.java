@@ -1,9 +1,10 @@
 package com.tsp.algorithms;
 
-import com.tsp.City;
+import com.tsp.domain.City;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * Implements a greedy algorithm.

@@ -2,7 +2,7 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.tsp.City;
+import com.tsp.domain.City;
 import com.tsp.algorithms.Greedy;
 import org.junit.jupiter.api.Test;
 

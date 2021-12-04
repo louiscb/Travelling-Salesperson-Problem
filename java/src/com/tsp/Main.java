@@ -1,8 +1,10 @@
 package com.tsp;
 
 import static com.tsp.algorithms.AlgorithmsHelper.totalDistance;
+import static com.tsp.algorithms.TSPAlgorithms.twoOpt;
 
 import com.tsp.algorithms.TSPAlgorithms;
+import com.tsp.domain.City;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
@@ -21,7 +23,7 @@ public class Main {
       if (IS_VERBOSE) {
          benchmark(cities);
       } else {
-         ArrayList<City> tourOrder = TSPAlgorithms.twoOpt(cities);
+         ArrayList<City> tourOrder = twoOpt(cities);
          tourOrder.forEach(city -> System.out.println(city.getId()));
       }
 
@@ -38,20 +40,15 @@ public class Main {
          testSingleAlgorithm(() -> TSPAlgorithms.naive(cities));
       }
 
-      System.out.println("\n---~ Two Opt ~---");
-      testSingleAlgorithm(() -> TSPAlgorithms.twoOpt(cities));
+      System.out.println("\n---~ 2-opt ~---");
+      testSingleAlgorithm(() -> twoOpt(cities));
 
-
-    //  System.out.println("\n---~ Branch And Bound ~---");
-      //testSingleAlgorithm(() -> TSPAlgorithms.branchAndBound(cities));
-
-      //System.out.println("\n---~ Greedy ~---");
-      //testSingleAlgorithm(() -> TSPAlgorithms.greedy(cities));
-
+      System.out.println("\n---~ Greedy ~---");
+      testSingleAlgorithm(() -> TSPAlgorithms.greedy(cities));
    }
 
    private static void testSingleAlgorithm(Callable<ArrayList<City>> func) throws Exception {
-      int numIterations = 50;
+      int numIterations = 5;
       int bestDistance = Integer.MAX_VALUE;
       double time = 0;
 
