@@ -1,3 +1,18 @@
 .idea/
 out/
 *.iml
+*.class
+.DS_Store
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.out
+*.out*
+
+# CMake
+cmake-build-*/
+CMakeLists*
+main.out.dSYM
